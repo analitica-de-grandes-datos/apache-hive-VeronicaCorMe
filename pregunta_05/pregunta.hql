@@ -28,7 +28,7 @@ LINES TERMINATED BY '\n';
 LOAD DATA LOCAL INPATH 'data0.csv' INTO TABLE tbl0;
 
 
-DROP TABLE IF EXISTS conteo_valores
+DROP TABLE IF EXISTS conteo_valores;
 CREATE TABLE conteo_valores AS SELECT (YEAR(c4)) years, letras FROM tbl0 LATERAL VIEW explode(c5) letter_list as letras;
 
 INSERT OVERWRITE LOCAL DIRECTORY './output'

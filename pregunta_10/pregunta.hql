@@ -24,9 +24,13 @@ CREATE TABLE t0 (
         COLLECTION ITEMS TERMINATED BY ','
         MAP KEYS TERMINATED BY '#'
         LINES TERMINATED BY '\n';
+
 LOAD DATA LOCAL INPATH 'data.tsv' INTO TABLE t0;
 
-/*
-    >>> Escriba su respuesta a partir de este punto <<<
-*/
 
+CREATE TABLE tabla_10 AS SELECT llaves, valores FROM t0
+LATERAL VIEW EXPLODE(c3) lista;
+
+INSERT OVERWRITE LOCAL DIRECTORY 'output'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+SELECT llaves, COUNT(1) FROM tabla_10 GROUP BY llaves;
